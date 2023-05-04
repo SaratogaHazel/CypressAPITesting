@@ -1,0 +1,35 @@
+{
+  "name": "cypress_starter",
+  "version": "1.0.0",
+  "description": "A self-contained project to start UI testing with Cypress",
+  "main": "index.js",
+  "scripts": {
+    "AllTest": "npx cypress run --spec cypress/e2e/**/* --env NODE_ENV=test --reporter junit",
+    "AllStage": "npx cypress run --spec cypress/e2e/**/* --env NODE_ENV=stage",
+    "cy:run": "cypress run",
+    "cyDebug": "npx cypress open --env lane=test",
+    "cyDebug-stage": "npx cypress open --env lane=stage",
+    "cy:parallel": "cypress-parallel -s cy:run -t 3 -d cypress/e2e/fakerestapi -a '\"--env lane=test\"'",
+    "cy:parallelTest2": "cypress-parallel -s cy:run -t 3 -d cypress/e2e/FSY-domestic-API -r junit -a '\"--env lane=test\"'",
+    "cy:parallelTest3": "cypress-parallel -s cy:run -t 3 -d cypress/e2e/FSY-domestic-API/account -r cypress-multi-reporters -a '\"--env lane=test\"'"
+  },
+  "author": "Greg Patterson",
+  "license": "test",
+  "devDependencies": {
+    "cypress": "^12.11.0",
+    "cypress-mochawesome-reporter": "^3.2.0",
+    "cypress-multi-reporters": "^1.6.1",
+    "cypress-shadow-dom": "^1.4.1",
+    "cypress-tags": "^0.3.0",
+    "cypress-xpath": "^1.6.0",
+    "junit-report-merger": "^3.0.5",
+    "mocha": "^10.0.0",
+    "mocha-junit-reporter": "^2.0.2",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "cypress-parallel": "^0.9.1",
+    "node": "^18.7.0",
+    "parallel": "^1.2.0"
+  }
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<testsuites failures="1" errors="0" tests="7">
+  <testsuite name="Root Suite" timestamp="2023-05-04T05:13:51" tests="0" file="cypress\e2e\fakerestapi\activities\get-activities.cy.js" time="0.0000" failures="0"/>
+  <testsuite name="GET /activities/{id} endpoint tests" timestamp="2023-05-04T05:13:51" tests="7" time="2.5560" failures="1">
+    <testcase name="activities/ Smoke test - happypath no Id" time="0.7210" classname="GET /activities/{id} endpoint tests activities/ Smoke test - happypath no Id"/>
+    <testcase name="activities/ Smoke test - happypath with Id" time="0.1630" classname="GET /activities/{id} endpoint tests activities/ Smoke test - happypath with Id"/>
+    <testcase name="activities/ badId: 000001111" time="0.1740" classname="GET /activities/{id} endpoint tests activities/ badId: 000001111">
+      <failure message="expected 'Not Found' to include 'One or more validation errors occurred.'" type="AssertionError"><![CDATA[AssertionError: expected 'Not Found' to include 'One or more validation errors occurred.'
+    at Context.eval (cypress/e2e/fakerestapi/activities/get-activities.cy.js:47:34)]]></failure>
+    </testcase>
+    <testcase name="activities/ wrong type: Robert" time="0.1620" classname="GET /activities/{id} endpoint tests activities/ wrong type: Robert"/>
+    <testcase name="activities/ long number: 12347893415098712908437213490789851239089023417897890" time="0.1570" classname="GET /activities/{id} endpoint tests activities/ long number: 12347893415098712908437213490789851239089023417897890"/>
+    <testcase name="activities/ other characters: ~!#@!$%$#@$#^#$%&amp;^*%%^&amp;*&quot;::'{}[]|&lt;&gt;?,." time="0.2570" classname="GET /activities/{id} endpoint tests activities/ other characters: ~!#@!$%$#@$#^#$%&amp;^*%%^&amp;*&quot;::'{}[]|&lt;&gt;?,."/>
+    <testcase name="activities/ unicode: العائلات إلى الأبد" time="0.3260" classname="GET /activities/{id} endpoint tests activities/ unicode: العائلات إلى الأبد"/>
+  </testsuite>
+</testsuites>

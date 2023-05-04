@@ -1,0 +1,67 @@
+trigger: none
+pr: none 
+pool: alm-windows-x64
+
+resources:
+  repositories:
+  - repository: apiTests
+    type: github
+    name: saratogahazel/CypressAPiTesting
+    endpoint: saratogahazel/CypressAPiTesting
+
+stages:
+# stage No Deployment
+- stage: no_deployment
+  displayName: no_deployment
+  jobs: 
+  - job: runAutomationForTests
+    displayName: 'Deploy and Run API Automation'
+    steps:
+    - script: pwd
+
+# stage run _API tests
+- stage: stage_API
+  displayName: stage_API
+  dependsOn: no_deployment
+  jobs: 
+  - deployment: CloudFoundryDeploy
+    environment: PTH Approval Stage
+    strategy:
+     runOnce:
+       deploy:
+          steps:
+          - checkout: apiTests
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '16.x'
+            displayName: 'Install Node'
+
+          - script: pwd
+          - script: ls -la cypress/e2e
+          - script: npm install
+            displayName: 'install all modules'
+          - script: npm install cypress
+            displayName: 'install cypress'
+          - script: npx cypress cache clear
+            displayName: 'clear Cypress Cache'
+          - script: npx cypress install
+            displayName: 'install cypress binaries'
+          - script: npx cypress run --spec cypress/e2e/fakerestapi/**/*.spec.js --env lane=stage,username=$(USERNAME),password=$(PASSWORD),baseUrl="https://stage.churchofjesuschrist.org/youth/childrenandyouth/fsy/",fsyLoginUrl="https://stage.churchofjesuschrist.org/youth/childrenandyouth/fsy/",fsyTestLoginUrl=https://stage.churchofjesuschrist.org/youth/childrenandyouth/fsy/",accessToken="QoYT-Tj5-gPAMEvZflrcQ03VDDU",idToken="QoYT-Tj5-gPAMEvZflrcQ03VDDU"
+            displayName: 'run headless cypress test using electron in Stage'
+            condition: succeeded()
+          - script: ls -la cypress/reports
+            condition: succeededOrFailed()
+          - task: CopyFiles@2
+            condition: succeededOrFailed()
+            inputs:
+              SourceFolder: 'cypress/reports'
+              Contents: '**'
+              TargetFolder: $(build.artifactStagingDirectory)
+              CleanTargetFolder: true
+          - task: PublishPipelineArtifact@1
+            condition: succeededOrFailed()
+            inputs:
+              targetPath: '$(build.artifactStagingDirectory)'
+              artifact: 'International_Reports_Stage'
+              publishLocation: 'pipeline'
+        

@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.scrollback": 5000,
+    "terminal.integrated.sendKeybindingsToShell": false,
+    "terminal.integrated.shellIntegration.history": 200
+}
